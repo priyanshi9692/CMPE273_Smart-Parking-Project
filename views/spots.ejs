@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Demo of a canvas used to render seat plan in a Cinema</title>
+    <style>
+        .table tbody tr td:not(:first-child) {
+            border: 1px solid black;
+            width: 1em;
+            height: 1em;
+            background-color: green;
+        }
+
+        .table tbody tr td:first-child {
+            font-weight: bold;
+        }
+
+        .table tr td:nth-child(12) {
+            border: none !important;
+        }
+
+        .table {
+            border-spacing: 3em;
+        }
+        @media only screen and (max-width: 600px) {
+  .columns {
+    width: 100%;
+  }
+}
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+    </style>
+
+</head>
+
+<body >
+
+        <div class="topnav">
+                <a  href="/">Home</a>
+                <a  href="/plan">Subscription</a>
+                <a class="active" href="/spots">Available Spots</a>
+                <a  href="/vehicles">Demo</a>
+              </div>
+
+    <div align="center">
+        <h2>Engineering Block</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                <tr>
+                    <td></td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>2</td>
+
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+
+                    <td>9</td>
+
+                </tr>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A</td>
+                    <td id="A0" ></td>
+                    <td id="A1"></td>
+                    <td id="A2" ></td>
+                    <td id="A3"> </td>
+                    <td id="A4" ></td>
+                    <td id="A5"></td>
+                    <td id="A6"></td>
+                    <td id="A7" ></td>
+                    <td id="A8"></td>
+                    <td id="A9"></td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td id="B0"></td>
+                    <td id="B1"></td>
+                    <td id="B2"></td>
+                    <td id="B3"></td>
+                    <td id="B4"></td>
+                    <td id="B5"></td>
+                    <td id="B6"></td>
+                    <td id="B7"></td>
+                    <td id="B8"></td>
+                    <td id="B9"></td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td id="C0"></td>
+                    <td id="C1"></td>
+                    <td id="C2"></td>
+                    <td id="C3"></td>
+                    <td id="C4" ></td>
+                    <td id="C5"></td>
+                    <td id="C6"></td>
+                    <td id="C7"></td>
+                    <td id="C8"></td>
+                    <td id="C9"></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div align="center">
+        <boarder>
+        <h2>Management Block</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>2</td>
+
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+
+                    <td>9</td>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A</td>
+                    <td ></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td ></td>
+                    <td></td>
+                    <td></td>
+                    <td ></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td ></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td style="background-color:red;"></td>
+                    <td></td>
+                    <td></td>
+                    <td style="background-color:red;"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td style="background-color:red;"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td style="background-color:red;"></td>
+                    <td></td>
+                    <td></td>
+                    <td style="background-color:red;"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+        </boarder>
+    </div>
+</body>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script>
+   $( document ).ready(function() {
+    $.ajax({
+        url: "/spots-status",
+        type: "get",
+        async: false,               
+        dataType: "json",           
+        success: function(data){
+            console.log(data);
+            for(var i=0;i<data.length;i++){
+                if(data[i].status==true){
+                    var slot = document.getElementById(data[i].slot);
+                    slot.style.backgroundColor = "red";
+                }
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log(arguments);
+        }
+    });
+    });
+     
+    </script>
+
+</html>

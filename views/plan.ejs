@@ -10,8 +10,8 @@
 /* Create three columns of equal width */
 .columns {
   float: left;
-  width: 40%;
-  padding: 10px;
+  width: 25%;
+  padding: 8px;
 }
 
 /* Style the list */
@@ -59,17 +59,6 @@
   text-decoration: none;
   font-size: 18px;
 }
-input[type=text] {
-  width: 50%;
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-label {
-  margin-bottom: 10px;
-  display: block;
-}
 
 /* Change the width of the three columns to 100% 
 (to stack horizontally on small screens) */
@@ -77,9 +66,7 @@ label {
   .columns {
     width: 100%;
   }
-
 }
-
 .topnav {
   overflow: hidden;
   background-color: #333;
@@ -106,31 +93,43 @@ label {
 </style>
     <body>
         <div class="topnav">
-            <a class="active" href="/">Home</a>
-            <a href="/plan">Subscription</a>
+            <a  href="/">Home</a>
+            <a class="active" href="/plan">Subscription</a>
             <a href="/spots">Available Spots</a>
             <a href="/vehicles">Demo</a>
           </div>
         <h1>
-            Smart Parking System
+            Parking lot System
         </h1>
         <div class="columns">
         </div>
             <div class="columns">
-                <form action="/email" method="post">
-                      <h3 class="header">Enter your details to avail facility</h3>
-        
-                           <label for="email"><i class="fa fa-envelope"></i>Email</label>
-                            <input type="text" id="email" name="email" placeholder="priyanshi@example.com">
-      
-                            <label for="vehicle"><i class="fa fa-institution"></i> Vehicle Number</label>
-                            <input type="text" id="vehicle" name="vehicle" placeholder="BA7832A">
-                            <label for="type"><i class="fa fa-institution"></i> Vehicle Type</label>
-                            <input type="text" id="type" name="type" placeholder="BA7832A">
-                            <label>
-                            <input type="submit" value="Find Empty Spot" class="button" onclick="test()"></label>
-                      </form>
+                    <ul class="price">
+                      <li class="header">Basic</li>
+                      <li class="grey">$ 200 / month</li>
+                      <li>Free parking as available</li>
+                      <li>24 hours parking</li>
+                      <li>No customer Support</li>
+                      <li>First come first serve</li>
+                      <li class="grey"><a href="/payment" class="button">Pay</a></li>
+                    </ul>
                   </div>
+
+                  
+                  <div class="columns">
+                        <ul class="price">
+                          <li class="header">Premium</li>
+                          <li class="grey">$ 450 / month</li>
+                          <li>Fix Parking slot</li>
+                          <li>24 hours parking</li>
+                          <li>Customer Support</li>
+                          <li>Available all the time</li>
+                          <li class="grey"><a href="/payment" class="button">Pay</a></li>
+                        </ul>
+                      </div>
+
+                      <div class="columns">
+                        </div>
                       
     </body>
 </html>

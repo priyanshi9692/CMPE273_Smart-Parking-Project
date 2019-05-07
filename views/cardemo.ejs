@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <style>
+/* Change the width of the three columns to 100% 
+(to stack horizontally on small screens) */
+@media only screen and (max-width: 600px) {
+  .columns {
+    width: 100%;
+  }
+
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}  </style>
+</head>
+
+<body>
+
+        <div class="topnav">
+                <a  href="/">Home</a>
+                <a href="/plan">Subscription</a>
+                <a href="/spots">Available Spots</a>
+                <a class="active" href="/vehicles">Demo</a>
+              </div>
+
+       
+              <br/>
+              <br/>
+<div class="container">       
+ 
+                Available Spots: 
+                <br/>
+                Cars:<span id='caravailable'></span>
+                <br/>
+                Trucks:<span id='truckavailable'></span>
+                <br/>
+                Bikes:<span id='bikeavailable'></span>
+                <br/>
+  
+        
+    <img src="car.png" class="img-rounded" alt="Cinque Terre" width="200" height="140"> 
+  <button onclick="find('car')">Find Spot</button>  <span id="car"></span> &nbsp;&nbsp;&nbsp;
+  <br/>
+  <div>
+        <input type="text" id="carspot"> &nbsp;&nbsp;<button onClick="park('car')">Park Car</button>&nbsp;&nbsp;<button onClick="leave('car')">Leave</button>
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+</div>
+
+<div class="container">       
+        <img src="bus.png" class="img-rounded" alt="Cinque Terre" width="200" height="140"> 
+        <button onclick="find('truck')">Find Spot</button> <span id="truck"></span> &nbsp;&nbsp;&nbsp;
+        <br/>
+        <div>
+                <input type="text" id="truckspot"> &nbsp;&nbsp;<button onClick="park('truck')">Park Truck</button>&nbsp;&nbsp;<button onClick="leave('truck')">Leave</button>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+      </div>
+
+      <div class="container">       
+            <img src="bike.png" class="img-rounded" alt="Cinque Terre" width="200" height="140"> 
+            <button onclick="find('bike')">Find Spot</button>  <span id="bike"></span> &nbsp;&nbsp;&nbsp;
+            <br/>
+            <div>
+                    <input type="text" id="bikespot"> &nbsp;&nbsp;<button onClick="park('bike')">Park Bike</button>&nbsp;&nbsp;<button onClick="leave('bike')">Leave</button>
+
+            </div>
+            <div>
+             
+            </div>
+          </div>
+         
+
+</body>
+
+<script>
+    $( document ).ready(function() {
+        $.ajax({
+        url: "/getallspots/",
+        type: "get",
+        async: false,               
+        dataType: "json",           
+        success: function(data){
+            $('#caravailable').text(data.carcount);
+            $('#truckavailable').text(data.truckcount);
+            $('#bikeavailable').text(data.bikecount);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log(arguments);
+        }
+    });
+    });
+    function find(id){
+    $.ajax({
+        url: "/emptyspot/"+id,
+        type: "get",
+        async: false,               
+        dataType: "text",           
+        success: function(data){
+            console.log(data);
+            var slot = document.getElementById(id);
+                    slot.innerHTML = data;
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log(arguments);
+        }
+    });
+} function park(id){
+    var value;
+    console.log(id);
+    if(id == 'bike'){
+        var type = document.getElementById('bikespot');
+        console.log(type.value);
+        value = type.value;
+    } else if(id == 'car'){
+        var type = document.getElementById('carspot');
+        console.log(type.value);
+        value = type.value;
+    } else if(id == 'truck'){
+        var type = document.getElementById('truckspot');
+        console.log(type.value);
+        value = type.value;
+    }
+    $.ajax({
+        url: "/park/"+value,
+        type: "get",
+        async: false,               
+        dataType: "text",           
+        success: function(data){
+            console.log(data);
+            alert("Successfully parked");
+            window.location.href = "http://localhost:5000/vehicles";
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log(arguments);
+        }
+    });
+}
+
+function leave(id){
+    var value;
+    if(id == 'bike'){
+        var type = document.getElementById('bikespot');
+        console.log(type.value);
+        value = type.value;
+    } else if(id == 'car'){
+        var type = document.getElementById('carspot');
+        console.log(type.value);
+        value = type.value;
+    } else if(id == 'truck'){
+        var type = document.getElementById('truckspot');
+        console.log(type.value);
+        value = type.value;
+    }
+
+    $.ajax({
+        url: "/leave/"+value,
+        type: "get",
+        async: false,               
+        dataType: "text",           
+        success: function(data){
+           alert("Successfully left the Block");
+           window.location.href = "http://localhost:5000/vehicles";
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log(arguments);
+        }
+    });
+}
+</script>
+</html>
